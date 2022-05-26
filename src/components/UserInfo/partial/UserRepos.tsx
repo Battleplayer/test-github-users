@@ -7,8 +7,11 @@ const UserRepos: FC<{ id: string }> = ({ id }) => {
 	const { isLoading: isReposLoading, error: reposError, data: userRepos } = useQueryGetUserRepos(id);
 
 	const filteredRepos = useMemo(() => {
-		if (!searchRepo.length) return userRepos;
-		return userRepos.filter((repo) => repo.name.includes(searchRepo));
+		if (userRepos) {
+			if (!searchRepo.length) return userRepos;
+			return userRepos.filter((repo) => repo.name.includes(searchRepo));
+		}
+		return [];
 	}, [userRepos, searchRepo]);
 
 	const handleSearch = useCallback((value) => {
@@ -26,17 +29,18 @@ const UserRepos: FC<{ id: string }> = ({ id }) => {
 		<div className="user-repos">
 			<SearchField value={searchRepo} onSearch={handleSearch} />
 			<ul>
-				{filteredRepos?.map(({ stargazers_count, html_url, name, forks_count }) => (
-					<li key={name}>
-						<a href={html_url} target="_blank" rel="noreferrer" className="paper">
-							<p>{name}</p>
-							<div>
-								<p>Forks:{forks_count}</p>
-								<p>Stars:{stargazers_count}</p>
-							</div>
-						</a>
-					</li>
-				))}
+				{filteredRepos.length > 0 &&
+					filteredRepos.map(({ stargazers_count, html_url, name, forks_count }) => (
+						<li key={name}>
+							<a href={html_url} target="_blank" rel="noreferrer" className="paper">
+								<p>{name}</p>
+								<div>
+									<p>Forks:{forks_count}</p>
+									<p>Stars:{stargazers_count}</p>
+								</div>
+							</a>
+						</li>
+					))}
 			</ul>
 		</div>
 	);

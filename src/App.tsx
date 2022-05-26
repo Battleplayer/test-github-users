@@ -9,8 +9,8 @@ const App: FC = () => {
 		<div className="container">
 			<h1>Github searcher 2022</h1>
 			<Routes>
-				<Route path="/" element={<UsersListPage />} />
-				<Route path="/:id" element={<UserInfoPage />} />
+				<Route path="/*" element={<UsersListPage />} />
+				<Route path=":id/*" element={<UserInfoPage />} />
 			</Routes>
 		</div>
 	);
