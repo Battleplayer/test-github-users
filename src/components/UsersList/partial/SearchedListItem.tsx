@@ -9,7 +9,7 @@ const SearchedListItem: FC<{ item: ISearchUser }> = ({ item }) => {
 	return (
 		<li>
 			<Link to={login} className="search-item paper">
-				<img src={avatar_url} alt="user avatar" />
+				{avatar_url ? <img src={avatar_url} alt="user avatar" /> : <span>no avatar</span>}
 				<span>{login}</span>
 			</Link>
 		</li>

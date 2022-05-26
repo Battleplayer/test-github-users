@@ -1,13 +1,10 @@
 import SearchField from 'components/common/SearchField';
-import { IUserRepos } from 'interfaces';
 import { FC, useCallback, useMemo, useState } from 'react';
+import { useQueryGetUserRepos } from '../hooks/use-query-get-user-repos';
 
-interface IUserReposProps {
-	userRepos: IUserRepos[];
-}
-
-const UserRepos: FC<IUserReposProps> = ({ userRepos }) => {
+const UserRepos: FC<{ id: string }> = ({ id }) => {
 	const [searchRepo, setSearchRepo] = useState('');
+	const { isLoading: isReposLoading, error: reposError, data: userRepos } = useQueryGetUserRepos(id);
 
 	const filteredRepos = useMemo(() => {
 		if (!searchRepo.length) return userRepos;
@@ -17,6 +14,13 @@ const UserRepos: FC<IUserReposProps> = ({ userRepos }) => {
 	const handleSearch = useCallback((value) => {
 		setSearchRepo(value);
 	}, []);
+
+	if (isReposLoading) {
+		return <h2>loading...</h2>;
+	}
+	if (reposError) {
+		return <h2>oops error</h2>;
+	}
 
 	return (
 		<div className="user-repos">

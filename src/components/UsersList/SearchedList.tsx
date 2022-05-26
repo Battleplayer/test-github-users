@@ -28,7 +28,7 @@ const SearchedList: FC<ISearchedListProps> = ({ data, isLoading, error }) => {
 		<>
 			<h2>Number of users: {data?.total_count}</h2>
 			<ul>
-				{data.items.map((item) => (
+				{data?.items.map((item) => (
 					<SearchedListItem item={item} key={item.id} />
 				))}
 			</ul>
