@@ -1,6 +1,7 @@
 import SearchField from 'components/common/SearchField';
 import { FC, useCallback, useMemo, useState } from 'react';
-import { useQueryGetUserRepos } from '../hooks/use-query-get-user-repos';
+import { useQueryGetUserRepos } from './hooks/use-query-get-user-repos';
+import UserRepoItem from './partial/UserRepoItem';
 
 const UserRepos: FC<{ id: string }> = ({ id }) => {
 	const [searchRepo, setSearchRepo] = useState('');
@@ -31,15 +32,13 @@ const UserRepos: FC<{ id: string }> = ({ id }) => {
 			<ul>
 				{filteredRepos.length > 0 &&
 					filteredRepos.map(({ stargazers_count, html_url, name, forks_count }) => (
-						<li key={name}>
-							<a href={html_url} target="_blank" rel="noreferrer" className="paper">
-								<p>{name}</p>
-								<div>
-									<p>Forks:{forks_count}</p>
-									<p>Stars:{stargazers_count}</p>
-								</div>
-							</a>
-						</li>
+						<UserRepoItem
+							key={name}
+							stargazers_count={stargazers_count}
+							html_url={html_url}
+							name={name}
+							forks_count={forks_count}
+						/>
 					))}
 			</ul>
 		</div>

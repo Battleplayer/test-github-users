@@ -1,8 +1,17 @@
 import { FC } from 'react';
-import UsersList from 'components/UsersList';
+import SearchField from 'components/common/SearchField';
+import SearchedList from 'components/UsersList/SearchedList';
+import { useQueryGetUsers } from 'components/UsersList/hooks/use-query-get-users';
 
 const UsersListPage: FC = () => {
-	return <UsersList />;
+	const { isLoading, error, data, searchValue, handleSearch } = useQueryGetUsers();
+
+	return (
+		<>
+			<SearchField value={searchValue} onSearch={handleSearch} />
+			<SearchedList isLoading={isLoading} data={data} error={error} />
+		</>
+	);
 };
 
 export default UsersListPage;

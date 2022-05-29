@@ -62,7 +62,6 @@ export interface ISearchedUser {
 }
 
 export interface IUserRepos {
-	forks: number;
 	forks_count: number;
 	html_url: string;
 	name: string;

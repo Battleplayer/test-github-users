@@ -1,6 +1,8 @@
 import { FC } from 'react';
 
-import { useQueryGetUserInfo } from '../hooks/use-query-get-user-info';
+import { useQueryGetUserInfo } from './hooks/use-query-get-user-info';
+
+import './styles.scss';
 
 const UserDetails: FC<{ id: string }> = ({ id }) => {
 	const { isLoading: isDetailsLoading, error: detailsError, data: userDetails } = useQueryGetUserInfo(id);

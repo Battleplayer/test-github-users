@@ -1,11 +1,28 @@
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
-import UserInfo from 'components/UserInfo';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import UserDetails from 'components/UserInfo/UserDetails';
+import UserRepos from 'components/UserInfo/UserRepos';
+import './styles.scss';
 
 const UserInfoPage: FC = () => {
 	const { id } = useParams();
 
-	return <UserInfo id={id} />;
+	const navigate = useNavigate();
+
+	const handleBack = () => {
+		navigate(-1);
+	};
+
+	return (
+		<div className="user-info">
+			<button type="button" onClick={handleBack}>
+				Go back
+			</button>
+			<UserDetails id={id} />
+			<UserRepos id={id} />
+		</div>
+	);
 };
 
 export default UserInfoPage;
