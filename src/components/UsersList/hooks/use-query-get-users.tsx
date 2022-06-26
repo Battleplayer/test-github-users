@@ -1,9 +1,9 @@
-import { useQuery } from 'react-query';
-import { useCallback, useEffect, useState } from 'react';
+import {useQuery} from 'react-query';
+import {useCallback, useEffect, useState} from 'react';
 import useDebounce from 'helper/useDebounce';
-import { ISearchUsersResult } from 'interfaces';
-import { useSearchParams } from 'react-router-dom';
-import { getUsers } from '../api';
+import {ISearchUsersResult} from 'interfaces';
+import {useSearchParams} from 'react-router-dom';
+import {getUsers} from '../api';
 
 interface IUseQueryUser {
 	isLoading: boolean;
@@ -14,8 +14,8 @@ interface IUseQueryUser {
 }
 
 export const useQueryGetUsers = (): IUseQueryUser => {
-	const [searchValue, setSearchValue] = useState('');
-	const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchValue, setSearchValue] = useState(searchParams.get('searchBy') ?? '');
 	const search = useDebounce(searchValue);
 	useEffect(() => {
 		if (searchParams.get('searchBy')) {
@@ -40,7 +40,9 @@ export const useQueryGetUsers = (): IUseQueryUser => {
 		[setSearchParams],
 	);
 
-	const { isLoading, error, data } = useQuery(['users-list', search], () => getUsers(search));
+    const {isLoading, error, data} = useQuery(['users-list', search], () => getUsers(search), {
+        staleTime: 5 * 6 * 1000
+    });
 
 	return {
 		isLoading,

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.scss';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import App from './App';
 
 const queryClient = new QueryClient();
@@ -15,6 +16,7 @@ root.render(
 			<BrowserRouter>
 				<App />
 			</BrowserRouter>
+			<ReactQueryDevtools />
 		</QueryClientProvider>
 	</StrictMode>,
 );
